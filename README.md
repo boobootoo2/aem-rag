@@ -16,6 +16,8 @@ It extracts page text from AEM’s JSON (`.infinity.json`) or rendered HTML, fla
 
 ![RAG Query Example](https://github.com/boobootoo2/aem-rag/blob/main/rag-query-example.png?raw=true)
 
+![RAG Query Example](https://github.com/boobootoo2/aem-rag/blob/main/browser-promp.png?raw=true)
+
 ---
 
 ## 🚀 Features
