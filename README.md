@@ -5,6 +5,21 @@ It extracts page text from AEM’s JSON (`.infinity.json`) or rendered HTML, fla
 
 ---
 
+## 🧪 Workflow
+
+![RAG Query Example](https://github.com/boobootoo2/aem-rag/blob/main/aem-rag-workflow.png?raw=true)
+
+
+---
+
+## 🧪 Example: Query Output
+
+![RAG Query Example](https://github.com/boobootoo2/aem-rag/blob/main/rag-query-example.png?raw=true)
+
+![RAG Query Example](https://raw.githubusercontent.com/boobootoo2/aem-rag/refs/heads/main/browser-prompt.png?raw=true)
+
+---
+
 ## 🚀 Features
 
 - ✅ Extracts all text nodes from AEM’s JCR (via `.infinity.json`)
