@@ -7,16 +7,18 @@ It extracts page text from AEM’s JSON (`.infinity.json`) or rendered HTML, fla
 
 ## 🧪 Workflow
 
-![RAG Query Example](https://github.com/boobootoo2/aem-rag/blob/main/aem-rag-workflow.png?raw=true)
-
+<p align="center">
+  <img src="https://github.com/boobootoo2/aem-rag/blob/main/aem-rag-workflow.png?raw=true" width="45%">
+</p>
 
 ---
 
 ## 🧪 Example: Query Output
 
-![RAG Query Example](https://github.com/boobootoo2/aem-rag/blob/main/rag-query-example.png?raw=true)
-
-![RAG Query Example](https://raw.githubusercontent.com/boobootoo2/aem-rag/refs/heads/main/browser-prompt.png?raw=true)
+<p align="center">
+  <img src="https://github.com/boobootoo2/aem-rag/blob/main/rag-query-example.png?raw=true" width="45%">
+  <img src="https://raw.githubusercontent.com/boobootoo2/aem-rag/refs/heads/main/browser-prompt.png?raw=true" width="45%">
+</p>
 
 ---
 
@@ -28,6 +30,7 @@ It extracts page text from AEM’s JSON (`.infinity.json`) or rendered HTML, fla
 - 🔍 Hybrid retrieval (Semantic + BM25 keyword search)
 - 💬 Query interface powered by **LangChain** and **FAISS**
 - 💾 Stores and loads FAISS vector indexes locally (`aem_vector_index`)
+- 🌐 Browser-based querying using a lightweight **Flask API + HTML UI**
 
 ---
 
@@ -39,7 +42,7 @@ It extracts page text from AEM’s JSON (`.infinity.json`) or rendered HTML, fla
 - Installed dependencies:
 
 ```bash
-pip install -U langchain langchain-community langchain-openai faiss-cpu rank-bm25 requests beautifulsoup4
+pip install -U langchain langchain-community langchain-openai faiss-cpu rank-bm25 requests beautifulsoup4 flask flask-cors
 ```
 
 ---
@@ -66,7 +69,8 @@ aem-rag/
 │
 ├── fetch_and_flatten_infinity.py   # Extracts and flattens AEM content
 ├── build_rag_index.py              # Builds local FAISS vector index
-├── query_rag.py                    # Interactive Q&A using hybrid retriever
+├── query_rag.py                    # RAG chatbot + Flask API
+├── index.html                      # Browser-based query interface
 ├── flattened_docs.json             # Output of text extraction
 ├── aem_vector_index/               # Saved FAISS index
 └── README.md                       # You are here
@@ -77,6 +81,7 @@ aem-rag/
 ## 🧠 How It Works
 
 ### 1️⃣ Fetch AEM Content
+
 Extract text directly from your AEM instance:
 
 ```bash
@@ -101,7 +106,7 @@ This step:
 - Embeds them using `OpenAIEmbeddings`
 - Saves the FAISS vector index to `aem_vector_index/`
 
-Output example:
+Example output:
 ```
 ✅ Indexed 69 chunks from 51 AEM nodes.
 💾 Saved local FAISS index: aem_vector_index
@@ -109,21 +114,57 @@ Output example:
 
 ---
 
-### 3️⃣ Query Your AEM Knowledge Base
+### 3️⃣ Query AEM via CLI
 
-Run the retrieval chatbot:
 ```bash
 python3 query_rag.py
 ```
 
-Sample session:
+Example:
 ```
 ✅ AEM Hybrid RAG system ready.
-
 Ask about AEM content (or type 'exit'): Where can I find "Sometimes it can be difficult"?
 
 🧠 That text appears on /content/we-retail/us/en/experience/hours-of-wilderness.html
 ```
+
+---
+
+## 🌐 How It Works (with Browser UI)
+
+You can now query your AEM RAG system directly from the browser using a built-in **Flask web API**.
+
+### 🧩 Step 1: Start the Flask Server
+
+```bash
+python3 query_rag.py serve
+```
+
+This launches the API at **http://localhost:8000**
+
+### 🧠 Step 2: Open the Frontend
+
+Simply open `index.html` in your browser or serve it directly from Flask.
+
+- Type any question about AEM content.  
+- The app sends your query to `/query`.  
+- The backend retrieves semantic + keyword results, runs an LLM prompt, and returns structured JSON.  
+- The browser renders the JSON dynamically (no field assumptions).
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/boobootoo2/aem-rag/refs/heads/main/browser-ui-example.png?raw=true" width="45%">
+</p>
+
+### ✨ Example Query
+
+> **Query:** “Where can I find ‘Sometimes it can be difficult’?”  
+>
+> **Response:**  
+> 📄 `/content/we-retail/us/en/experience/hours-of-wilderness.html`  
+> 🔧 `weretail/components/content/contentfragment`  
+> 🧩 *Content Fragment Component*  
+>  
+> Confidence: **High**
 
 ---
 
@@ -143,31 +184,23 @@ Ask about AEM content (or type 'exit'): Where can I find "Sometimes it can be di
 |----------|--------|-----|
 | ❌ “I don’t know.” | Text missing from JSON | Use `fetch_and_flatten_infinity.py` recursive version |
 | `ImportError: faiss not found` | Missing FAISS library | Run `pip install faiss-cpu` |
-| `401 Invalid API key` | API key missing | Export your OpenAI key via `export OPENAI_API_KEY` |
-| No results for literal search | Semantic miss | Use hybrid retriever (already built-in) |
-
----
-
-## 🧪 Example: Query Output
-
-```
-Ask about AEM content (or type 'exit'): What does the 48 hours of wilderness page describe?
-
-🧠 It’s an article about two brothers exploring the Uintas mountain range,
-featuring fishing, camping, and photography across a 48-hour trip.
-```
+| `401 Invalid API key` | API key missing | Export your OpenAI key |
+| `CORS error in browser` | Browser blocked request | Use `flask-cors` or serve `index.html` from Flask |
 
 ---
 
 ## 🧭 Future Enhancements
 
-- 🔄 Auto-crawl all child AEM pages under a base path
-- 🌐 Index rendered HTML for HTL-driven components
-- 💡 Optional embeddings using local Hugging Face models
-- 🧰 Integration with Streamlit or Gradio for UI
+- 🔄 Auto-crawl all child AEM pages under a base path  
+- 🌐 Index rendered HTML for HTL-driven components  
+- 💡 Optional local embedding models (Hugging Face)  
+- 🧰 Streamlit or Gradio interactive UI  
 
 ---
 
 ## 🧑‍💻 Author
 
 **John G. Shultz**  
+📍 Ossining, NY  
+💼 [github.com/boobootoo2](https://github.com/boobootoo2)  
+💬 [linkedin.com/in/john-g-shultz](https://linkedin.com/in/john-g-shultz)
