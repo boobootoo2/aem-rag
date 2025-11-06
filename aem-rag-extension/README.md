@@ -9,17 +9,17 @@
 
 ```mermaid
 flowchart LR
-  AEM[(AEM Author/Publish)]
-  subgraph AEM Bundle
-    S[/RagQueryServlet\n(/bin/ragquery)/]
-    IDX[[RagIndexService\n(OO/RPC to Python)]]
-    SCH[[RagIndexerScheduler\n(CRON/Oak Event)]]
-    CFG[(OSGi Config)]
+  AEM["AEM Author/Publish"]
+  subgraph "AEM Bundle"
+    S["RagQueryServlet<br/>(/bin/ragquery)"]
+    IDX["RagIndexService<br/>(OO/RPC to Python)"]
+    SCH["RagIndexerScheduler<br/>(CRON/Oak Event)"]
+    CFG["OSGi Config"]
   end
-  PY[Python Indexer\n(flatten_infinity.py + build_index.py)]
-  VEC[(Vector Store)\nFAISS files under /var/rag-index]
-  LLM[(OpenAI API)]
-  UI[Tools ▸ AEM RAG Console\n(HTL + clientlib)]
+  PY["Python Indexer<br/>(flatten_infinity.py + build_index.py)"]
+  VEC["Vector Store<br/>FAISS files under /var/rag-index"]
+  LLM["OpenAI API"]
+  UI["Tools ▸ AEM RAG Console<br/>(HTL + clientlib)"]
   
   UI --> S
   S --> IDX
