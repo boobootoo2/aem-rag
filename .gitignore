@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual env
+venv/
+.env/
+
+# Index data
+aem_index_store/
+aem_index_meta.json
+*.faiss
+*.npy
+*.pkl
+
+# System / IDE
+.DS_Store
+.vscode/
+.idea/

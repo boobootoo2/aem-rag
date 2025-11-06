@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AEM RAG Query Browser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: radial-gradient(circle at top, #101019, #0b0b10);
+      color: #f5f5f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    h1 { color: #7ae2ff; font-weight: 600; margin-bottom: 1rem; }
+    #queryForm { width: 100%; max-width: 700px; margin-top: 2rem; }
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid #2a2a30;
+      resize: vertical;
+      background: #14141a;
+      color: #f5f5f7;
+    }
+    button {
+      background: linear-gradient(90deg, #00b4d8, #7209b7);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 1rem;
+      transition: opacity 0.2s ease-in-out;
+    }
+    button:hover { opacity: 0.85; }
+    #response {
+      margin-top: 2.5rem;
+      width: 100%;
+      max-width: 700px;
+      padding: 1.8rem;
+      background: linear-gradient(180deg, #151520, #0d0d14);
+      border: 1px solid #222;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      line-height: 1.7;
+      word-break: break-word;
+    }
+    .field {
+      margin-bottom: 1rem;
+      background: #1a1a25;
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      border-left: 3px solid #7ae2ff;
+    }
+    .label {
+      font-weight: 600;
+      color: #7ae2ff;
+      margin-right: 6px;
+      text-transform: capitalize;
+    }
+    .nested {
+      margin-left: 1rem;
+      border-left: 2px dashed #444;
+      padding-left: 0.5rem;
+      margin-top: 0.4rem;
+    }
+    .markdown table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .markdown th, .markdown td {
+      border: 1px solid #333;
+      padding: 0.6rem;
+      text-align: left;
+    }
+    .markdown th {
+      background: #1c1c27;
+      color: #7ae2ff;
+    }
+    .markdown tr:nth-child(even) {
+      background: #13131b;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>🧠 AEM RAG Query Browser</h1>
+
+  <form id="queryForm">
+    <textarea id="userInput" rows="3" placeholder="Ask about AEM content..."></textarea>
+    <button type="submit">Query</button>
+  </form>
+
+  <div id="response"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  document.getElementById('queryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const prompt = document.getElementById('userInput').value.trim();
+    const responseDiv = document.getElementById('response');
+    if (!prompt) return;
+    responseDiv.innerHTML = "<p>🔎 Querying AEM RAG index...</p>";
+
+    try {
+      const res = await fetch('http://localhost:8000/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: prompt })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      const renderObject = (obj) => {
+        // If it's a Markdown-like string with pipes → render as table
+        if (typeof obj === 'string' && obj.includes('|') && obj.includes('---')) {
+          return `<div class="markdown">${marked.parse(obj)}</div>`;
+        }
+        if (typeof obj === 'string') {
+          return `<p>${obj}</p>`;
+        }
+        if (Array.isArray(obj)) {
+          return obj.map(renderObject).join('');
+        }
+        if (typeof obj === 'object' && obj !== null) {
+          return Object.entries(obj)
+            .map(([key, value]) => {
+              return `<div class="field"><span class="label">${key}</span>${renderObject(value)}</div>`;
+            })
+            .join('');
+        }
+        return obj ?? '';
+      };
+
+      responseDiv.innerHTML = `<h3>🧠 Response</h3>${renderObject(data.answer || data)}`;
+    } catch (err) {
+      responseDiv.innerHTML = `<p style="color:#ff6b6b">❌ ${err.message}</p>`;
+    }
+  });
+</script>
+
+</body>
+</html>
