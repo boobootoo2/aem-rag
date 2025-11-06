@@ -1,0 +1,23 @@
+# Virtual environments
+venv/
+.env/
+*.env
+__pycache__/
+*.pyc
+.DS_Store
+
+# IDE settings
+.vscode/
+.idea/
+
+# FAISS / LangChain / Index Artifacts
+aem_index_store/
+aem_index.faiss
+aem_index_meta.json
+index_state.json
+
+# FAISS / LangChain / Index Artifacts
+aem_index_store/
+aem_index.faiss
+aem_index_meta.json
+index_state.json
