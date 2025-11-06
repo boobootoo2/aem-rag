@@ -1,0 +1,8 @@
+{
+  "openai.api.key": "$[secret:OPENAI_API_KEY]",
+  "index.paths": "/apps/core,/content/we-retail,/conf/we-retail,/content/dam",
+  "index.storage": "/var/rag-index",
+  "model.chat": "gpt-4o-mini",
+  "max.k": 8,
+  "index.cron": "0 0 3 * * ?"
+}
