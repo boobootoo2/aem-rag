@@ -22,3 +22,6 @@ aem_index_old.faiss
 .DS_Store
 .vscode/
 .idea/
+
+# Maven
+target/
