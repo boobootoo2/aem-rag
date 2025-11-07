@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+  <!-- Existing filters -->
+  <filter root="/content/aem-rag"/>
+
+  <!-- Add these new entries for editable templates -->
+  <filter root="/conf/aem-rag"/>
+  <filter root="/conf/aem-rag/settings/wcm/template-types"/>
+  <filter root="/conf/aem-rag/settings/wcm/templates"/>
+  <filter root="/conf/aem-rag/settings/wcm/policies"/>
+</workspaceFilter>

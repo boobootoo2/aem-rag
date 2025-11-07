@@ -17,7 +17,7 @@
 
   <!-- 👇 KEY LINE -->
   <properties>
-    <packageType>content</packageType>
+    <packageType>mixed</packageType>
   </properties>
 
   <build>

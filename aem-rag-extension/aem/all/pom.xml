@@ -18,6 +18,13 @@
     
     <dependencies>
         <dependency>
+          <groupId>com.example</groupId>
+          <artifactId>ui.content</artifactId>
+          <version>${project.version}</version>
+          <type>zip</type>
+        </dependency>
+  
+        <dependency>
             <groupId>com.example</groupId>
             <artifactId>core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
@@ -44,31 +51,26 @@
                 <version>1.3.6</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <group>com.example</group>
-                    <packageName>aem-rag-extension-all</packageName>
-                    <packageType>container</packageType>
-                    
-                    <!-- Skip validation completely -->
-                    <skipValidation>true</skipValidation>
-                    
-                    <embeddeds>
-                        <embedded>
-                            <groupId>com.example</groupId>
-                            <artifactId>ui.apps</artifactId>
-                            <type>zip</type>
-                            <target>/apps/aem-rag/install</target>
-                            <filter>false</filter>
-                        </embedded>
-                        <embedded>
-                            <groupId>com.example</groupId>
-                            <artifactId>ui.config</artifactId>
-                            <type>zip</type>
-                            <target>/apps/aem-rag-config/install</target>
-                            <filter>false</filter>
-                        </embedded>
-                    </embeddeds>
+                    <validatorsSettings>
+                    <jackrabbit-packagetype>
+                        <options>
+                        <severity>WARN</severity>
+                        </options>
+                    </jackrabbit-packagetype>
+                    <jackrabbit-filter>
+                        <options>
+                        <severity>WARN</severity>
+                        </options>
+                    </jackrabbit-filter>
+                    <jackrabbit-nodetypes>
+                        <options>
+                        <severity>WARN</severity>
+                        </options>
+                    </jackrabbit-nodetypes>
+                    </validatorsSettings>
                 </configuration>
-            </plugin>
+                </plugin>
+
         </plugins>
     </build>
     

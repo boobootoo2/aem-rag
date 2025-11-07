@@ -4,6 +4,6 @@
   <entry key="group">com.example</entry>
   <entry key="name">ui.config</entry>
   <entry key="version">1.0.0-SNAPSHOT</entry>
-  <entry key="packageType">container</entry>
+  <entry key="packageType">mixed</entry>
   <entry key="description">AEM RAG Servlet OSGi Configuration Package</entry>
 </properties>

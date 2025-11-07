@@ -11,6 +11,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>ui.content</module>
     <module>core</module>
     <module>ui.apps</module>
     <module>ui.config</module>
@@ -29,7 +30,7 @@
           <extensions>true</extensions>
           <configuration>
             <filterSource>src/main/content/META-INF/vault/filter.xml</filterSource>
-            <packageType>content</packageType>
+            <packageType>mixed</packageType>
           </configuration>
         </plugin>
 

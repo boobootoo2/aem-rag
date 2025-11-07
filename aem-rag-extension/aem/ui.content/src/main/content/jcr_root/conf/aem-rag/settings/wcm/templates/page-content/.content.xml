@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root
+    xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template"
+    jcr:title="AEM RAG Content Page"
+    jcr:description="Editable template for AEM RAG pages"
+    allowedPaths="[/content/aem-rag(/.*)?]"
+    cq:templateType="/conf/aem-rag/settings/wcm/template-types/page"
+    ranking="{Long}100"/>

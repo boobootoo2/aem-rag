@@ -45,7 +45,7 @@
             <configuration>
                 <group>com.example</group>
                 <packageName>aem-rag-extension-all</packageName>
-                <packageType>container</packageType>
+                <packageType>mixed</packageType>
                 
                 <!-- ADD THIS LINE to explicitly tell it NOT to generate filters -->
                 <filterSource>META-INF/vault/filter.xml</filterSource>
