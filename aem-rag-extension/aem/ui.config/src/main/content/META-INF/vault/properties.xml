@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <entry key="group">com.example</entry>
+  <entry key="name">ui.config</entry>
+  <entry key="version">1.0.0-SNAPSHOT</entry>
+  <entry key="packageType">container</entry>
+  <entry key="description">AEM RAG Servlet OSGi Configuration Package</entry>
+</properties>

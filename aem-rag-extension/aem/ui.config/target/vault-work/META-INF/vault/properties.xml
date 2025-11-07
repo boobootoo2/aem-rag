@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>ui.config</comment>
+<entry key="allowIndexDefinitions">false</entry>
+<entry key="created">2025-11-07T00:19:59.741Z</entry>
+<entry key="groupId">com.example</entry>
+<entry key="name">ui.config</entry>
+<entry key="description">ui.config</entry>
+<entry key="artifactId">ui.config</entry>
+<entry key="version">1.0.0-SNAPSHOT</entry>
+<entry key="packageType">content</entry>
+<entry key="requiresRoot">false</entry>
+<entry key="group">com.example</entry>
+</properties>

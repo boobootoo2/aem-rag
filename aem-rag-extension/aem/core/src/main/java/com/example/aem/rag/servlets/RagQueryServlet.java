@@ -1,45 +1,44 @@
 package com.example.aem.rag.servlets;
 
-import com.example.aem.rag.services.RagIndexService;
-import com.example.aem.rag.services.OpenAIService;
-import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
-@Component(service = javax.servlet.Servlet.class,
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.stream.Collectors;
+
+@Component(
+    service = {Servlet.class},
     property = {
-        "sling.servlet.paths=/bin/ragquery",
-        "sling.servlet.methods=POST"
-    })
+        "sling.servlet.methods=POST",
+        "sling.servlet.paths=/bin/ragquery"
+    }
+)
 public class RagQueryServlet extends SlingAllMethodsServlet {
 
-    @Reference
-    private RagIndexService indexService;
-
-    @Reference
-    private OpenAIService openAI;
-
     @Override
-    protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws IOException {
+    protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response)
+            throws ServletException, IOException {
+
         response.setContentType("application/json");
-        String question = request.getParameter("question");
-        if (question == null || question.trim().isEmpty()) {
-            question = new String(request.getRequestBodyAsBytes(), StandardCharsets.UTF_8);
-        }
 
-        String context = indexService.retrieveContext(question, 8);
-        String prompt = "Context:\n" + context + "\n\nQuestion:\n" + question;
+        // Read JSON body
+        String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 
-        String answer = openAI.complete(prompt, "gpt-4o-mini");
-        response.getWriter().write("{\"answer\":" + toJson(answer) + "}");
-    }
+        // Parse the incoming JSON
+        JsonObject json = JsonParser.parseString(body).getAsJsonObject();
+        String query = json.has("query") ? json.get("query").getAsString() : "No query provided";
 
-    private String toJson(String s) {
-        if (s == null) return "null";
-        return "\"" + s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n") + "\"";
+        // Example: create response
+        JsonObject result = new JsonObject();
+        result.addProperty("response", "Received: " + query);
+
+        // Write JSON output
+        response.getWriter().write(result.toString());
     }
 }

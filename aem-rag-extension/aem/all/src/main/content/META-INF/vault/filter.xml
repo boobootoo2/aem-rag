@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-  <filter root="/apps/aem-rag"/>
+  <!-- The 'all' package should only aggregate content/config roots -->
+  <filter root="/conf/aem-rag"/>
+  <filter root="/content/aem-rag"/>
 </workspaceFilter>

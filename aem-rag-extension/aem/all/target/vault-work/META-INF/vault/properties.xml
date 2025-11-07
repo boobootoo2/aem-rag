@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>all</comment>
+<entry key="allowIndexDefinitions">false</entry>
+<entry key="created">2025-11-07T00:20:00.135Z</entry>
+<entry key="groupId">com.example</entry>
+<entry key="name">all</entry>
+<entry key="description">all</entry>
+<entry key="artifactId">all</entry>
+<entry key="version">1.0.0-SNAPSHOT</entry>
+<entry key="packageType">content</entry>
+<entry key="requiresRoot">false</entry>
+<entry key="group">com.example</entry>
+</properties>

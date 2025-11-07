@@ -20,20 +20,62 @@
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.metatype.annotations</artifactId>
+      <version>1.4.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
       <artifactId>org.osgi.service.component.annotations</artifactId>
       <version>1.5.1</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.10.1</version>
-    </dependency>
+
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20230618</version>
     </dependency>
+    <!-- Sling / AEM Core APIs -->
+
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>javax.servlet-api</artifactId>
+  <version>3.1.0</version>
+  <scope>provided</scope>
+</dependency>
+
+<!-- Optional: annotations and commons -->
+<dependency>
+  <groupId>org.apache.commons</groupId>
+  <artifactId>commons-lang3</artifactId>
+  <version>3.12.0</version>
+</dependency>
+
+<!-- GSON for JSON parsing -->
+<dependency>
+  <groupId>com.google.code.gson</groupId>
+  <artifactId>gson</artifactId>
+  <version>2.10.1</version>
+</dependency>
+
+<!-- Apache Commons IO for IOUtils -->
+<dependency>
+  <groupId>com.google.code.gson</groupId>
+  <artifactId>gson</artifactId>
+  <version>2.10.1</version>
+</dependency>
+
+
+<!-- Java 8 Stream API (built-in, but add this just in case older AEM SDK) -->
+<dependency>
+  <groupId>org.apache.servicemix.bundles</groupId>
+  <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
+  <version>1_2</version>
+  <scope>provided</scope>
+</dependency>
+
+
   </dependencies>
   <build>
     <plugins>
@@ -51,6 +93,17 @@
           </instructions>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>maven-sling-plugin</artifactId>
+        <version>2.4.0</version>
+        <configuration>
+          <slingUrl>http://localhost:4502/system/console/install</slingUrl>
+          <user>admin</user>
+          <password>admin</password>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>
