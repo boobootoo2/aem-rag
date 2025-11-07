@@ -3,7 +3,7 @@
 <properties>
 <comment>AEM RAG Extension - All</comment>
 <entry key="allowIndexDefinitions">false</entry>
-<entry key="created">2025-11-07T04:38:43.138Z</entry>
+<entry key="created">2025-11-07T06:52:10.156Z</entry>
 <entry key="groupId">com.example</entry>
 <entry key="name">aem-rag-extension-all</entry>
 <entry key="description">AEM RAG Extension - All</entry>

@@ -1,7 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workspaceFilter version="1.0">
-  <filter root="/apps/aem-rag"/>
-  <filter root="/conf/aem-rag"/>
-  <filter root="/content/aem-rag"/>
-</workspaceFilter>
-
+<workspaceFilter version="1.0"/>

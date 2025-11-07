@@ -20,64 +20,79 @@
   <build>
     <plugins>
 
-      <!-- 📦 FileVault packaging -->
+      <!-- FileVault plugin builds the container package -->
       <plugin>
         <groupId>org.apache.jackrabbit</groupId>
         <artifactId>filevault-package-maven-plugin</artifactId>
         <version>1.3.6</version>
         <extensions>true</extensions>
         <configuration>
-          <packageType>container</packageType>
           <group>com.example</group>
-          <packageName>aem-rag</packageName>
-          <!-- ❌ no inline filters to avoid merge conflict -->
+          <packageName>aem-rag-extension-all</packageName>
+          <packageType>container</packageType>
+
+          <!-- Filter just defines roots -->
+          <filters>
+            <filter><root>/apps/aem-rag</root></filter>
+            <filter><root>/conf/aem-rag</root></filter>
+            <filter><root>/content/aem-rag</root></filter>
+          </filters>
+
+          <!-- Embed the other modules -->
+          <embeddeds>
+            <embedded>
+              <groupId>com.example</groupId>
+              <artifactId>ui.apps</artifactId>
+              <type>zip</type>
+              <target>/apps/aem-rag/install</target>
+            </embedded>
+            <embedded>
+              <groupId>com.example</groupId>
+              <artifactId>ui.config</artifactId>
+              <type>zip</type>
+              <target>/apps/aem-rag/install</target>
+            </embedded>
+            <embedded>
+              <groupId>com.example</groupId>
+              <artifactId>core</artifactId>
+              <type>jar</type>
+              <target>/apps/aem-rag/install</target>
+            </embedded>
+          </embeddeds>
         </configuration>
       </plugin>
 
+
+      <!-- Auto upload and install -->
+<plugin>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>exec-maven-plugin</artifactId>
+  <version>3.1.0</version>
+  <executions>
+    <execution>
+      <id>curl-upload-install</id>
+      <phase>install</phase>
+      <goals>
+        <goal>exec</goal>
+      </goals>
+      <configuration>
+        <executable>sh</executable>
+        <arguments>
+          <argument>${project.basedir}/upload-to-aem.sh</argument>
+          <argument>${project.build.directory}/${project.build.finalName}.zip</argument>
+          <argument>${project.artifactId}</argument>
+        </arguments>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+
+
+
+
+
+
+
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>autoInstallPackage</id>
-      <build>
-        <plugins>
-
-          <!-- 🚀 Auto-upload & install package on AEM -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
-            <executions>
-              <execution>
-                <id>curl-upload-install</id>
-                <phase>install</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>curl</executable>
-                  <arguments>
-                    <argument>-u</argument>
-                    <argument>admin:admin</argument>
-                    <argument>-F</argument>
-                    <argument>file=@${project.build.directory}/${project.build.finalName}.zip</argument>
-                    <argument>-F</argument>
-                    <argument>name=${project.artifactId}</argument>
-                    <argument>-F</argument>
-                    <argument>force=true</argument>
-                    <argument>-F</argument>
-                    <argument>install=true</argument>
-                    <argument>http://localhost:4502/crx/packmgr/service.jsp</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
 </project>
