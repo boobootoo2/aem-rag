@@ -4,17 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
     <parent>
         <groupId>com.example</groupId>
         <artifactId>aem-rag-extension</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    
     <artifactId>aem-rag-extension-all</artifactId>
     <packaging>content-package</packaging>
     <name>AEM RAG Extension - All</name>
-
-    <!-- Add explicit dependencies -->
+    
     <dependencies>
         <dependency>
             <groupId>com.example</groupId>
@@ -34,7 +35,7 @@
             <type>zip</type>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -47,7 +48,9 @@
                     <packageName>aem-rag-extension-all</packageName>
                     <packageType>container</packageType>
                     
-                    <!-- Embed the other modules -->
+                    <!-- Skip validation completely -->
+                    <skipValidation>true</skipValidation>
+                    
                     <embeddeds>
                         <embedded>
                             <groupId>com.example</groupId>
@@ -60,45 +63,46 @@
                             <groupId>com.example</groupId>
                             <artifactId>ui.config</artifactId>
                             <type>zip</type>
-                            <target>/apps/aem-rag/install</target>
-                            <filter>false</filter>
-                        </embedded>
-                        <embedded>
-                            <groupId>com.example</groupId>
-                            <artifactId>core</artifactId>
-                            <target>/apps/aem-rag/install</target>
+                            <target>/apps/aem-rag-config/install</target>
                             <filter>false</filter>
                         </embedded>
                     </embeddeds>
-                    
-                    <!-- Disable validation completely -->
-                    <skipValidation>true</skipValidation>
                 </configuration>
-            </plugin>
-            
-            <!-- Auto upload and install -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>curl-upload-install</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>sh</executable>
-                            <arguments>
-                                <argument>${project.basedir}/upload-to-aem.sh</argument>
-                                <argument>${project.build.directory}/${project.build.finalName}.zip</argument>
-                                <argument>${project.artifactId}</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
+    
+    <profiles>
+        <profile>
+            <id>autoInstallPackage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>upload-to-aem</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>bash</executable>
+                                    <arguments>
+                                        <argument>${project.basedir}/upload-to-aem.sh</argument>
+                                        <argument>${project.build.directory}/${project.build.finalName}.zip</argument>
+                                        <argument>${project.artifactId}</argument>
+                                    </arguments>
+                                    <workingDirectory>${project.basedir}</workingDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
 </project>

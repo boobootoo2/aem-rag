@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <!-- Include the path where embedded packages are installed -->
     <filter root="/apps/aem-rag/install"/>
+    <filter root="/apps/aem-rag-config/install"/>
 </workspaceFilter>

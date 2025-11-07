@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1762497311113
+Bnd-LastModified: 1762545491263
 Build-Jdk-Spec: 15
 Bundle-ManifestVersion: 2
 Bundle-Name: AEM RAG Core

@@ -89,30 +89,23 @@
       <!-- Sling Maven Plugin for deployment -->
       <plugin>
         <groupId>org.apache.sling</groupId>
-        <artifactId>maven-sling-plugin</artifactId>
+        <artifactId>sling-maven-plugin</artifactId>
         <version>2.4.0</version>
         <executions>
-          <execution>
-            <id>install-package</id>
-            <phase>install</phase>
-            <goals>
-              <goal>install</goal>
-            </goals>
-            <configuration>
-              <!-- ✅ Explicitly deploy the ZIP package -->
-              <deployFile>${project.build.directory}/${project.build.finalName}.zip</deployFile>
-
-              <slingUrl>http://localhost:4502/system/console/install</slingUrl>
-              <user>admin</user>
-              <password>admin</password>
-
-              <!-- Optional: retry logic -->
-              <retryCount>3</retryCount>
-              <retryDelay>2000</retryDelay>
-            </configuration>
-          </execution>
+            <execution>
+                <id>install-bundle</id>
+                <goals>
+                    <goal>install</goal>
+                </goals>
+                <configuration>
+                    <!-- Change from 8080 to 4502 -->
+                    <slingUrl>http://localhost:4502/system/console</slingUrl>
+                    <user>admin</user>
+                    <password>admin</password>
+                </configuration>
+            </execution>
         </executions>
-      </plugin>
+    </plugin>
 
     </plugins>
   </build>
