@@ -1,21 +1,45 @@
 <div class="aem-rag-console" data-sly-use.model="com.example.aem.rag.core.models.RagConsoleModel">
     <h2>AEM RAG Query Console</h2>
     
-    <div class="rag-query-form">
-        <label for="rag-query">Enter your query:</label>
-        <textarea id="rag-query" name="query" rows="4" cols="50"></textarea>
-        <button type="button" onclick="submitRagQuery()">Submit Query</button>
-    </div>
-    
-    <div class="rag-results" id="rag-results">
-        <!-- Results will be displayed here -->
-    </div>
-</div>
+        <form id="queryForm">
+      <textarea id="userInput" rows="3" placeholder="Ask about AEM content..."></textarea>
+      <button type="submit">Query</button>
+    </form>
 
-<script>
-function submitRagQuery() {
-    const query = document.getElementById('rag-query').value;
-    // Add your query submission logic here
-    console.log('Submitting query:', query);
-}
-</script>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    document.getElementById('queryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const prompt = document.getElementById('userInput').value.trim();
+      const responseDiv = document.getElementById('response');
+      if (!prompt) return;
+      responseDiv.innerHTML = "<p>🔎 Querying AEM RAG index...</p>";
+
+      try {
+        const res = await fetch('/bin/ragquery', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: prompt })
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+
+        const renderObject = (obj) =>
+          Object.entries(obj)
+            .map(([key, value]) => {
+              if (value && typeof value === 'object') {
+                return `<div class="field"><span class="label">${key}</span>${renderObject(value)}</div>`;
+              } else {
+                return `<div class="field"><span class="label">${key}</span>${value ?? 'n/a'}</div>`;
+              }
+            })
+            .join('');
+
+        responseDiv.innerHTML = `<h3>🧠 Response</h3>${renderObject(data)}`;
+      } catch (err) {
+        responseDiv.innerHTML = `<p style="color:#ff6b6b">❌ ${err.message}</p>`;
+      }
+    });
+  </script>

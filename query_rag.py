@@ -201,8 +201,10 @@ def query():
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == "serve":
-        print("🌐 Starting Flask API on http://localhost:8000")
-        app.run(host="0.0.0.0", port=8000, debug=True)
+        # Allow overriding the port with the PORT env var; default to the workspace-exposed port
+        port = int(os.getenv("PORT", "54726"))
+        print(f"🌐 Starting Flask API on http://localhost:{port}")
+        app.run(host="0.0.0.0", port=port, debug=True)
     else:
         while True:
             q = input("Ask about AEM content (or 'exit'): ")
