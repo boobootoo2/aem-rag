@@ -1,45 +1,39 @@
-<div class="aem-rag-console" data-sly-use.model="com.example.aem.rag.core.models.RagConsoleModel">
-    <h2>AEM RAG Query Console</h2>
-    
-        <form id="queryForm">
-      <textarea id="userInput" rows="3" placeholder="Ask about AEM content..."></textarea>
-      <button type="submit">Query</button>
-    </form>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.css @ categories='aem-rag.console'}"/>
+</sly>
 
-    <div id="response"></div>
+<div class="aem-rag-console">
+  <h2>AEM RAG Query Console</h2>
+  
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item">
+      <span class="stat-label">Cache Size</span>
+      <span class="stat-value" id="cacheSize">-</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Hit Rate</span>
+      <span class="stat-value" id="hitRate">-</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Total Requests</span>
+      <span class="stat-value" id="totalRequests">-</span>
+    </div>
   </div>
 
-  <script>
-    document.getElementById('queryForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const prompt = document.getElementById('userInput').value.trim();
-      const responseDiv = document.getElementById('response');
-      if (!prompt) return;
-      responseDiv.innerHTML = "<p>🔎 Querying AEM RAG index...</p>";
+  <div class="query-section">
+    <form id="queryForm">
+      <textarea id="userInput" rows="4" placeholder="Ask about AEM content... (e.g., 'How do I configure the dispatcher?')"></textarea>
+      <div class="button-group">
+        <button type="submit" class="btn-primary">🔍 Query</button>
+        <button type="button" class="btn-secondary" onclick="loadCacheStats()">📊 Refresh Stats</button>
+        <button type="button" class="btn-secondary" onclick="clearCache()">🗑️ Clear Cache</button>
+      </div>
+    </form>
+  </div>
 
-      try {
-        const res = await fetch('/bin/ragquery', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: prompt })
-        });
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
+  <div id="response"></div>
+</div>
 
-        const renderObject = (obj) =>
-          Object.entries(obj)
-            .map(([key, value]) => {
-              if (value && typeof value === 'object') {
-                return `<div class="field"><span class="label">${key}</span>${renderObject(value)}</div>`;
-              } else {
-                return `<div class="field"><span class="label">${key}</span>${value ?? 'n/a'}</div>`;
-              }
-            })
-            .join('');
-
-        responseDiv.innerHTML = `<h3>🧠 Response</h3>${renderObject(data)}`;
-      } catch (err) {
-        responseDiv.innerHTML = `<p style="color:#ff6b6b">❌ ${err.message}</p>`;
-      }
-    });
-  </script>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.js @ categories='aem-rag.console'}"/>
+</sly>

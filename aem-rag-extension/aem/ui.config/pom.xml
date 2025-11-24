@@ -15,7 +15,6 @@
   <packaging>content-package</packaging>
   <version>1.0.0-SNAPSHOT</version>
 
-  <!-- 👇 KEY LINE -->
   <properties>
     <packageType>mixed</packageType>
   </properties>

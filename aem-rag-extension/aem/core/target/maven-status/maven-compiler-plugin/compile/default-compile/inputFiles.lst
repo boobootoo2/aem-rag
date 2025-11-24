@@ -1,7 +1,8 @@
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/OpenAIService.java
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/servlets/RagQueryServlet.java
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/impl/OpenAIServiceImpl.java
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/impl/RagIndexServiceImpl.java
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/scheduler/RagIndexerScheduler.java
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/config/RagConfig.java
-/Users/jgs/Documents/GitHub/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/RagIndexService.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/config/OpenAIConfig.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/RagIndexService.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/RagEntry.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/OpenAIService.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/config/RagConfig.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/servlets/RagQueryServlet.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/impl/RagIndexServiceImpl.java
+/workspace/aem-rag/aem-rag-extension/aem/core/src/main/java/com/example/aem/rag/services/impl/OpenAIServiceImpl.java

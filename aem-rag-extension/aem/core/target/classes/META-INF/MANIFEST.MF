@@ -1,35 +1,36 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1762666239618
-Build-Jdk-Spec: 15
+Bnd-LastModified: 1763942347589
+Build-Jdk-Spec: 21
 Bundle-ManifestVersion: 2
 Bundle-Name: AEM RAG Core
 Bundle-SymbolicName: com.example.aem.rag.core
 Bundle-Version: 1.0.0.SNAPSHOT
 Created-By: Apache Maven Bundle Plugin 5.1.9
 Export-Package: com.example.aem.rag.config;version="1.0.0",com.example.a
- em.rag.scheduler;version="1.0.0",com.example.aem.rag.services;version="
- 1.0.0",com.example.aem.rag.services.impl;uses:="com.example.aem.rag.ser
- vices";version="1.0.0",com.example.aem.rag.servlets;uses:="javax.servle
- t,org.apache.sling.api,org.apache.sling.api.servlets";version="1.0.0"
-Import-Package: com.example.aem.rag.scheduler,com.example.aem.rag.servic
- es,com.example.aem.rag.services.impl,com.example.aem.rag.servlets,com.g
- oogle.gson;version="[2.10,3)",java.io,java.lang,java.lang.annotation,ja
- va.lang.invoke,java.net,java.net.http,java.util.stream,javax.servlet;ve
- rsion="[3.1,4)",org.apache.sling.api;version="[2.3,3)",org.apache.sling
- .api.servlets;version="[2.3,3)"
+ em.rag.services;version="1.0.0",com.example.aem.rag.services.impl;uses:
+ ="com.example.aem.rag.config,com.example.aem.rag.services";version="1.0
+ .0",com.example.aem.rag.servlets;uses:="javax.servlet,org.apache.sling.
+ api,org.apache.sling.api.servlets";version="1.0.0"
+Import-Package: com.google.gson;version="[2.8,3)",com.google.gson.reflec
+ t;version="[2.8,3)",org.apache.sling.api;version="[2.2,3)",org.apache.s
+ ling.api.servlets;version="[2.2,3)",com.example.aem.rag.config,com.exam
+ ple.aem.rag.services,com.example.aem.rag.services.impl,com.example.aem.
+ rag.servlets,java.io,java.lang,java.lang.annotation,java.lang.invoke,ja
+ va.lang.reflect,java.net,java.net.http,java.util,java.util.stream,javax
+ .servlet;version="[3.1,4)",org.slf4j;version="[1.7,2)"
 Provide-Capability: osgi.service;objectClass:List<String>="com.example.a
  em.rag.services.OpenAIService";uses:="com.example.aem.rag.services",osg
  i.service;objectClass:List<String>="com.example.aem.rag.services.RagInd
  exService";uses:="com.example.aem.rag.services",osgi.service;objectClas
- s:List<String>="java.lang.Runnable",osgi.service;objectClass:List<Strin
- g>="javax.servlet.Servlet";uses:="javax.servlet"
+ s:List<String>="javax.servlet.Servlet";uses:="javax.servlet"
 Require-Capability: osgi.service;filter:="(objectClass=com.example.aem.r
- ag.services.RagIndexService)";effective:=active,osgi.extender;filter:="
- (&(osgi.extender=osgi.component)(version>=1.5.0)(!(version>=2.0.0)))",o
- sgi.ee;filter:="(&(osgi.ee=JavaSE)(version=11))"
-Service-Component: OSGI-INF/com.example.aem.rag.scheduler.RagIndexerSche
- duler.xml,OSGI-INF/com.example.aem.rag.services.impl.OpenAIServiceImpl.
- xml,OSGI-INF/com.example.aem.rag.services.impl.RagIndexServiceImpl.xml,
- OSGI-INF/com.example.aem.rag.servlets.RagQueryServlet.xml
+ ag.services.OpenAIService)";effective:=active;resolution:=optional,osgi
+ .service;filter:="(objectClass=com.example.aem.rag.services.RagIndexSer
+ vice)";effective:=active;resolution:=optional,osgi.extender;filter:="(&
+ (osgi.extender=osgi.component)(version>=1.5.0)(!(version>=2.0.0)))",osg
+ i.ee;filter:="(&(osgi.ee=JavaSE)(version=11))"
+Service-Component: OSGI-INF/com.example.aem.rag.services.impl.OpenAIServ
+ iceImpl.xml,OSGI-INF/com.example.aem.rag.services.impl.RagIndexServiceI
+ mpl.xml,OSGI-INF/com.example.aem.rag.servlets.RagQueryServlet.xml
 Sling-Model-Packages: com.example.aem.rag
 Tool: Bnd-6.3.1.202206071316

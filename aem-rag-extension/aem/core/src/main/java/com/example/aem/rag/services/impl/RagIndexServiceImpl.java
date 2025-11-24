@@ -8,6 +8,8 @@ import com.google.gson.reflect.TypeToken;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,11 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component(service = RagIndexService.class)
+@Component(service = RagIndexService.class, immediate = true)
 public class RagIndexServiceImpl implements RagIndexService {
 
-    @Reference
-    private OpenAIService openAIService;
+    @Reference(cardinality = ReferenceCardinality.OPTIONAL, policy = ReferencePolicy.DYNAMIC)
+    private volatile OpenAIService openAIService;
     private static final String EMBED_MODEL = "text-embedding-ada-002";
 
     private Gson gson = new Gson();
